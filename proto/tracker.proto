@@ -3,7 +3,6 @@ syntax = "proto3";
 package proto;
 option go_package = "aerotrack/proto";
 
-import "google/protobuf/empty.proto";
 
 
 message LocationUpdate {
@@ -22,13 +21,15 @@ message VehicleStatus {
     double speed = 4;
     int64 timestamp = 5;
 }
-
+message UpdateResponse {
+    string message = 1;
+}
 message VehicleID {
     int64 vehicle_id = 1;
 }
 
 
 service TrackerService {
-    rpc UpdateLocation(LocationUpdate) returns (google.protobuf.Empty);
+    rpc UpdateLocation(LocationUpdate) returns (UpdateResponse);
     rpc GetVehicleStatus(VehicleID) returns (VehicleStatus);
 }
