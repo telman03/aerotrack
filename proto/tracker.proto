@@ -5,7 +5,7 @@ option go_package = "aerotrack/proto";
 
 import "google/protobuf/empty.proto";
 
-// Message sent from vehicle producer
+
 message LocationUpdate {
     int64 vehicle_id = 1;
     string latitude = 2;
@@ -14,7 +14,7 @@ message LocationUpdate {
     int64 timestamp = 5;
 }
 
-// Message returned when asking for latest vehicle data
+
 message VehicleStatus {
     int64 vehicle_id = 1;
     string latitude = 2;
@@ -23,16 +23,12 @@ message VehicleStatus {
     int64 timestamp = 5;
 }
 
-// Used when requesting a specific vehicle
 message VehicleID {
     int64 vehicle_id = 1;
 }
 
-// Main Tracker Service
-service TrackerService {
-    // Update vehicle location in Redis
-    rpc UpdateLocation(LocationUpdate) returns (google.protobuf.Empty);
 
-    // Get the latest status for a vehicle
+service TrackerService {
+    rpc UpdateLocation(LocationUpdate) returns (google.protobuf.Empty);
     rpc GetVehicleStatus(VehicleID) returns (VehicleStatus);
 }
