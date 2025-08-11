@@ -58,7 +58,6 @@ func main() {
 
 }
 func printTable(data map[int64]VehicleStatus) {
-	// Clear screen
 	fmt.Print("\033[H\033[2J")
 	fmt.Printf("%-10s %-12s %-12s %-8s %-20s\n", "VehicleID", "Latitude", "Longitude", "Speed", "Timestamp")
 	fmt.Println(strings.Repeat("-", 65))
