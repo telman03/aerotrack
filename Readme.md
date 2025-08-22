@@ -1,72 +1,90 @@
-AeroTrack: Real-Time Flight Tracker
+# ✈️ **AeroTrack: Real-Time Flight Tracker**
+
 AeroTrack is a real-time geospatial tracking system built to monitor and visualize live flight data. It demonstrates a stateful, event-driven architecture by ingesting live data, managing the current state of each flight, and pushing updates in real-time to connected clients.
 
-⚙️ Technologies Used
-Go (Golang): The core backend service.
+---
 
-WebSockets: For low-latency, real-time communication between the server and a client dashboard.
+## ⚙️ **Technologies Used**
 
-PostgreSQL: The source of truth for storing all flight data and its history.
+- **Go (Golang):** Core backend service  
+- **WebSockets:** Low-latency, real-time communication  
+- **PostgreSQL:** Source of truth for flight data  
+- **Docker:** Containerization for easy setup  
 
-Docker: For containerizing the application and its database for easy setup.
+---
 
-✨ Core Features
-Live Data Ingestion: A background process simulates or ingests flight coordinate data into the main tracking service.
+## ✨ **Core Features**
 
-Real-Time State Management: The service maintains the current location and status for each flight in memory, allowing for fast lookups.
+- **Live Data Ingestion:**  
+  Background process simulates or ingests flight coordinate data.
 
-WebSocket Broadcast: When a flight's location changes, the server broadcasts the new coordinates to all connected clients.
+- **Real-Time State Management:**  
+  Maintains current location and status for each flight in memory.
 
-Data Persistence: All flight data, including route history, is persisted in a PostgreSQL database.
+- **WebSocket Broadcast:**  
+  Broadcasts location changes to all connected clients.
 
-🚀 Getting Started
+- **Data Persistence:**  
+  Persists all flight data and route history in PostgreSQL.
+
+---
+
+## 🚀 **Getting Started**
+
 This project is containerized with Docker for a straightforward setup.
 
-Prerequisites
-Docker and Docker Compose
+### **Prerequisites**
 
-Go (if running outside of Docker)
+- Docker & Docker Compose  
+- Go (if running outside Docker)
 
-Setup
-Clone the repository:
+### **Setup**
 
-git clone [your-repository-url]
-cd aerotrack
+```sh
+git clone https://github.com/telman03/aerotrack.git
+cd aerotrack 
+```
 
-Start the services:
-This command will build the Go application, start the PostgreSQL database, and run all services in the background.
+**Start the services:**
 
+```sh
 docker-compose up --build -d
+```
 
-Check the logs:
-You can view the logs of your application to see the data ingestion and WebSocket activity.
+**Check the logs:**
 
+```sh
 docker-compose logs -f aerotrack-service
+```
 
-🗺️ Architecture Overview
+---
+
+## 🗺️ **Architecture Overview**
+
 The system follows a simple client-server model with a focus on real-time data flow.
 
-A simplified client-server architecture diagram with a WebSocket connection would go here.
+```
++-------------------+         WebSocket         +---------------------+
+|   Go Backend      | <-----------------------> |   Client Dashboard  |
+| (Data, DB, WS)    |                          | (Map Visualization) |
++-------------------+                          +---------------------+
+         |
+         | PostgreSQL
+         v
++-------------------+
+|   Flight Data DB  |
++-------------------+
+```
 
-Go Backend: The central Go application handles three key functions:
+- **Go Backend:**  
+  - Data Simulation (Goroutine)  
+  - PostgreSQL Interface  
+  - WebSocket Server
 
-Data Simulation: A Goroutine within the main service simulates live flight data.
+- **PostgreSQL:**  
+  Stores flight data (long-term memory)
 
-PostgreSQL Interface: Reads and writes flight data to the database.
+- **Client Dashboard:**  
+  (Not included) Connects via WebSockets to visualize live flight paths
 
-WebSocket Server: Manages all client connections, receiving requests and broadcasting real-time updates.
-
-PostgreSQL: Stores the flight data, serving as the system's long-term memory.
-
-Client Dashboard (not included in this repo): A hypothetical frontend (e.g., built with React or Vue) that connects to the Go backend via WebSockets to visualize the live flight paths on a map.
-
-🎓 What I Learned
-Designing and implementing a real-time backend using Go's net/http package and WebSockets.
-
-Managing in-memory application state for low-latency lookups.
-
-The importance of concurrency in Go for handling multiple client connections and background data ingestion simultaneously.
-
-Working with Docker Compose for local development and dependency management.
-
-Persisting complex data structures, such as geospatial coordinates, in a PostgreSQL database.
+---
